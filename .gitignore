@@ -43,3 +43,4 @@ Object files
 *.mpits
 set-0
 *.sym
+.vscode
