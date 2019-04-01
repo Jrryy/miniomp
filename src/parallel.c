@@ -36,8 +36,7 @@ GOMP_parallel (void (*fn) (void *), void *data, unsigned num_threads, unsigned i
   miniomp_parallel->id = 0;  
   pthread_mutex_init(&miniomp_parallel->mutex, NULL);
   for (int i=0; i<num_threads; i++){
-    //pthread_mutex_init(&miniomp_parallel[i].mutex, NULL);
-    //miniomp_thread_init(&miniomp_threads[i], i, worker, miniomp_parallel);
+    miniomp_thread_init(&miniomp_threads[i], i, worker, miniomp_parallel);
   }
   for (int i=0; i < num_threads; i++){
     pthread_join(miniomp_threads[i].pthread, NULL);

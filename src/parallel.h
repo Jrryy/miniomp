@@ -13,9 +13,6 @@ typedef struct {
 
 extern miniomp_parallel_t *miniomp_parallel;
 
-// Declaration of per-thread specific key
-extern pthread_key_t miniomp_specifickey;
-
 // Functions implemented in this module
 void miniomp_parallel_init(miniomp_parallel_t *parallel, void (*fn) (void *), void *data, unsigned int id);
 void GOMP_parallel (void (*fn) (void *), void *data, unsigned num_threads, unsigned int flags);
