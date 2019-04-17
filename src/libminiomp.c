@@ -8,6 +8,8 @@ void fini_miniomp(void) __attribute__((destructor));
 // Function to parse OMP_NUM_THREADS environment variable
 void parse_env(void);
 
+pthread_key_t miniomp_specifickey;
+
 void
 init_miniomp(void) {
   printf ("mini-omp is being initialized\n");

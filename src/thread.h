@@ -1,9 +1,12 @@
 #include <pthread.h>
-#include "libminiomp.h"
+
 
 typedef struct {
   unsigned int id;
   pthread_t pthread;
-} miniomp_thread;
+  struct miniomp_parallel_t *region;
+} miniomp_thread_t;
 
-void miniomp_thread_init(miniomp_thread * thread, unsigned int id);
+extern pthread_key_t miniomp_specifickey;
+
+void miniomp_thread_init(miniomp_thread_t * thread, unsigned int id, void (*fn) (void *), void *data);

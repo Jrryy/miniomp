@@ -8,7 +8,7 @@ int foo() {
     int i, x = 1023;
     #pragma omp parallel firstprivate(x) reduction(+:first) if(x>0) num_threads(2)
     {
-    x++; 
+    x++;
     first += x;
     }
 
