@@ -9,31 +9,28 @@ miniomp_thread_t *miniomp_threads;
 miniomp_parallel_t *miniomp_parallel;
 
 // Declaration of per-thread specific key
-pthread_key_t miniomp_specifickey;
+extern pthread_key_t miniomp_specifickey;
 
 void miniomp_thread_init(miniomp_thread_t * thread, unsigned int id, void (*fn) (void *), miniomp_parallel_t *region){
   thread->id = id;
   thread->region = region;
-  pthread_setspecific(miniomp_specifickey, thread);
   pthread_create(&(thread->pthread), NULL, fn, thread);
 }
 
 
 // This is the prototype for the Pthreads starting function
 void worker(void *args) {
+  pthread_key_create(&miniomp_specifickey, NULL);
   miniomp_thread_t *thread = args;
+  pthread_setspecific(miniomp_specifickey, thread);
   miniomp_parallel_t *parallel = thread->region;
   int id = thread->id;
   printf("Thread %d initialized\n", id);
   void (*fn) (void *) = parallel->fn;
   void * data = parallel->fn_data;
-  //printf("Thread %d fn and data done\n", id);
+  printf("Thread %d fn and data done\n", id);
   fn(data);
-  //printf("Executed fn in thread %d", id);
-    // insert all necessary code here for:
-  //   1) save thread-specific data
-  //   2) invoke the per-threads instance of function encapsulating the parallel region
-  //   3) exit the function
+  printf("Executed fn in thread %d\n", id);
 }
 
 void
@@ -50,6 +47,7 @@ GOMP_parallel (void (*fn) (void *), void *data, unsigned num_threads, unsigned i
     miniomp_thread_init(&miniomp_threads[i], i, worker, miniomp_parallel);
   }
   for (int i=0; i < num_threads; i++){
+    printf("Thread %i arrived to join\n", i);
     pthread_join(miniomp_threads[i].pthread, NULL);
   }
   free(miniomp_threads);

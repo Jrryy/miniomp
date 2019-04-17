@@ -17,7 +17,6 @@ init_miniomp(void) {
   parse_env();
   // Initialize Pthread data structures 
   // Initialize Pthread thread-specific data, useful for example to store the OpenMP thread identifier
-  pthread_key_create(&miniomp_specifickey, NULL);
   // Initialize OpenMP default lock and default barrier
   // Initialize OpenMP workdescriptors for for and single 
   // Initialize OpenMP task queue for task and taskloop
