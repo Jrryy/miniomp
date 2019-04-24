@@ -10,11 +10,11 @@ int omp_get_num_threads (void) {
 
 int omp_get_thread_num (void) {
   //printf("TBI: omp_get_thread_num still doesn't know who I am ... let's say I am 0\n");
-  printf("Called get_thread: \n");
+  //printf("Called get_thread: \n");
   miniomp_thread_t *thread = pthread_getspecific(miniomp_specifickey);
-  printf("Casted getspecific \n");
+  //printf("Casted getspecific \n");
   unsigned int thread_id = thread->id;
-  printf("%d\n", thread_id);
+  //printf("THREAD ID IS %d\n", thread_id);
   return((int)thread_id);
 }
 

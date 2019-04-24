@@ -8,6 +8,7 @@ typedef struct {
   void *fn_data;
   unsigned int id;
   pthread_mutex_t mutex;
+  pthread_barrier_t barrier;
     // complete the definition of parallel descriptor
 } miniomp_parallel_t;
 
