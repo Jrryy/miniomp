@@ -17,6 +17,12 @@ void GOMP_critical_end (void) {
 
 void GOMP_critical_name_start (void **pptr) {
   pthread_mutex_t * plock = *pptr;
+  printf("Arrived to pointer to name %p", plock);
+
+  //miniomp_thread_t *thread = pthread_getspecific(miniomp_specifickey);
+  //miniomp_parallel_t *region = thread->region;
+  
+  //pthread_setspecific(miniomp_specifickey, thread);
   pthread_mutex_lock(plock);
   printf("TBI: Entering a named critical %p (%p)\n", pptr, plock);
   // if plock is NULL it means that the lock associated to the name has not yet been allocated and initialized
