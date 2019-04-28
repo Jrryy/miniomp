@@ -8,6 +8,8 @@ miniomp_thread_t *miniomp_threads;
 // Global variable for parallel descriptor
 miniomp_parallel_t *miniomp_parallel;
 
+miniomp_single_t *miniomp_single;
+
 // Declaration of per-thread specific key
 extern pthread_key_t miniomp_specifickey;
 
@@ -33,6 +35,7 @@ GOMP_parallel (void (*fn) (void *), void *data, unsigned num_threads, unsigned i
   if(!num_threads) num_threads = omp_get_num_threads();
   miniomp_threads = malloc(num_threads*sizeof(miniomp_thread_t));
   miniomp_parallel = malloc(sizeof(miniomp_parallel_t));
+  miniomp_single = malloc(sizeof(miniomp_single_t));
   miniomp_parallel->fn = fn;
   miniomp_parallel->fn_data = data;
   miniomp_parallel->id = 0;
