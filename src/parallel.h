@@ -2,6 +2,10 @@
 
 // Declaration of array for storing pthread identifiers from pthread_create function
 
+typedef struct {
+  unsigned int id; // id of the thread that reached the single part
+} miniomp_single_t;
+
 // Type declaration for parallel descriptor (arguments needed to create pthreads)
 typedef struct {
   void (*fn) (void *);
@@ -9,7 +13,7 @@ typedef struct {
   unsigned int id;
   pthread_mutex_t mutex;
   pthread_barrier_t barrier;
-    // complete the definition of parallel descriptor
+  miniomp_single_t *single;
 } miniomp_parallel_t;
 
 typedef struct {

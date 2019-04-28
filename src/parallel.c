@@ -23,8 +23,6 @@ void worker(void *args) {
   miniomp_thread_t *thread = args;
   pthread_setspecific(miniomp_specifickey, thread);
   miniomp_parallel_t *parallel = thread->region;
-  int id = thread->id;
-  printf("Thread %d initialized\n", id);
   void (*fn) (void *) = parallel->fn;
   void * data = parallel->fn_data;
   fn(data);
@@ -33,7 +31,6 @@ void worker(void *args) {
 void
 GOMP_parallel (void (*fn) (void *), void *data, unsigned num_threads, unsigned int flags) {
   if(!num_threads) num_threads = omp_get_num_threads();
-  printf("Starting a parallel region using %d threads\n", num_threads);
   miniomp_threads = malloc(num_threads*sizeof(miniomp_thread_t));
   miniomp_parallel = malloc(sizeof(miniomp_parallel_t));
   miniomp_parallel->fn = fn;
